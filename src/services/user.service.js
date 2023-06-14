@@ -1,6 +1,7 @@
 const { User } = require('../models');
 
-const getAll = () => User.findAll();
+// Funções
+const getAll = () => User.findAll({ exclude: { model: User.password } });
 
 const getById = (id) => User.findByPk(id);
 

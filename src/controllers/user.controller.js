@@ -1,6 +1,28 @@
 const jwt = require('jsonwebtoken');
 const userServices = require('../services/user.service');
 
+/**
+ * 
+ * @param {Request} req 
+ * @param {Response} res 
+ */
+const getAllUsers = async (_req, res) => {
+  try {
+    const users = await userServices.getAll();
+
+    const responseUsers = users.map((user) => ({
+      id: user.id,
+      displayName: user.displayName,
+      email: user.email,
+      image: user.image,
+    }));
+
+    return res.status(200).json(responseUsers);
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
+
 const secret = process.env.JWT_SECRET || 'secretJWT';
 /**
  * 
@@ -33,4 +55,5 @@ const createUser = async (req, res) => {
 
 module.exports = {
   createUser,
+  getAllUsers,
 };
