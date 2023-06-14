@@ -4,6 +4,21 @@ const categoriesServices = require('../services/categories.service');
  * 
  * @param {Request} req 
  * @param {Response} res 
+ */
+const getAllCategories = async (req, res) => {
+  try {
+    const allCategories = await categoriesServices.getAllCategories();
+
+    return res.status(200).json(allCategories);
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
+
+/**
+ * 
+ * @param {Request} req 
+ * @param {Response} res 
  * @returns 
  */
 const createCategorie = async (req, res) => {
@@ -24,4 +39,5 @@ const createCategorie = async (req, res) => {
 
 module.exports = {
   createCategorie,
+  getAllCategories,
 };
