@@ -12,6 +12,8 @@ const router = express.Router();
 
 router.get('/', validatetoken, userController.getAllUsers);
 
+router.get('/:id', validatetoken, userController.getById);
+
 router.post(
   '/',
   validateDisplayName,
