@@ -6,6 +6,20 @@ const blogPostServices = require('../services/blogPost.services');
  * 
  * @param {Request} req 
  * @param {Response} res 
+ */
+const getAllPosts = async (_req, res) => {
+  try {
+    const allPosts = await postServices.getAllPosts();
+    return res.status(200).json(allPosts);
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
+
+/**
+ * 
+ * @param {Request} req 
+ * @param {Response} res 
  * @returns 
  */
 const createPostCategory = async (req, res) => {
@@ -32,4 +46,5 @@ const createPostCategory = async (req, res) => {
 
 module.exports = {
   createPostCategory,
+  getAllPosts,
 };
