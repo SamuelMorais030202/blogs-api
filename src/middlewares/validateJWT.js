@@ -8,7 +8,9 @@ module.exports = (req, res, next) => {
   
     if (!token) return res.status(401).json({ message: 'Token not found' });
   
-    jwt.verify(token, secret);
+    const { data } = jwt.verify(token, secret);
+
+    req.userId = data.userId;
   
     next();
   } catch (err) {
