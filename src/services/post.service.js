@@ -22,6 +22,25 @@ const getAllPosts = async () => {
   return allList;
 };
 
+const getById = async (id) => {
+  const post = BlogPost.findOne({
+    where: { id },
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      {
+        model: Category,
+        as: 'categories',
+        attributes: { 
+          exclude: ['PostCategory'],
+        },
+        through: { attributes: [] },
+      },
+    ],
+  });
+
+  return post;
+};
+
 const createPostCategory = (postId, categoryIds) => {
   const list = categoryIds.map((category) => ({
     postId,
@@ -34,4 +53,5 @@ const createPostCategory = (postId, categoryIds) => {
 module.exports = {
   createPostCategory,
   getAllPosts,
+  getById,
 };

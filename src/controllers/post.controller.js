@@ -20,6 +20,26 @@ const getAllPosts = async (_req, res) => {
  * 
  * @param {Request} req 
  * @param {Response} res 
+ */
+const getById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const postId = await postServices.getById(id);
+
+    if (!postId) {
+      return res.status(404).json({ message: 'Post does not exist' });
+    }
+
+    return res.status(200).json(postId);
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
+
+/**
+ * 
+ * @param {Request} req 
+ * @param {Response} res 
  * @returns 
  */
 const createPostCategory = async (req, res) => {
@@ -47,4 +67,5 @@ const createPostCategory = async (req, res) => {
 module.exports = {
   createPostCategory,
   getAllPosts,
+  getById,
 };
