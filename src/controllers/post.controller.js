@@ -64,8 +64,35 @@ const createPostCategory = async (req, res) => {
   }
 };
 
+/**
+ * 
+ * @param {Request} req 
+ * @param {Response} res 
+ */
+const updateBlogPost = async (req, res) => {
+  try {
+    const { title, content } = req.body;
+    const { id } = req.params;
+    const { userId } = req;
+
+    const validate = await postServices.getById(id);
+
+    if (userId !== validate.userId) {
+      return res.status(401).json({ message: 'Unauthorized user' });
+    }
+
+    await blogPostServices.updateBlogPost(title, content, id);
+    const newBlogPost = await postServices.getById(id);
+
+    return res.status(200).json(newBlogPost);
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
+
 module.exports = {
   createPostCategory,
   getAllPosts,
   getById,
+  updateBlogPost,
 };

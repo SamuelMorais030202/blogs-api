@@ -13,6 +13,17 @@ const create = (title, content, id) => {
   return newBlogPost;
 };
 
+const updateBlogPost = async (title, content, id) => {
+  const date = new Date();
+  const update = date.toISOString();
+
+  const [updateBlog] = await BlogPost
+  .update({ title, content, update }, { where: { id } });
+
+  return updateBlog;
+};
+
 module.exports = {
   create,
+  updateBlogPost,
 };
