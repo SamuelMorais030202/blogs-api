@@ -81,8 +81,26 @@ const createUser = async (req, res) => {
   }
 };
 
+/**
+ * 
+ * @param {Request} req 
+ * @param {Response} res 
+ */
+const deleteUser = async (req, res) => {
+  try {
+    const { userId } = req;
+
+    const deleteUserMe = await userServices.deleteUser(userId);
+
+    return res.status(204).json(deleteUserMe);
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
+
 module.exports = {
   createUser,
   getAllUsers,
   getById,
+  deleteUser,
 };

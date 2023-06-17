@@ -22,4 +22,6 @@ router.post(
   userController.createUser,
 );
 
+router.delete('/me', validatetoken, userController.deleteUser);
+
 module.exports = router;

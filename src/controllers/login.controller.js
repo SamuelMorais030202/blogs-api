@@ -8,7 +8,7 @@ const secret = process.env.JWT_SECRET || 'secretJWT';
  * @param {Request} req 
  * @param {Response} res 
 */
-module.exports = async (req, res) => {
+const createUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -33,4 +33,8 @@ module.exports = async (req, res) => {
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
+};
+
+module.exports = {
+  createUser,
 };
