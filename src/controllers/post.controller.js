@@ -118,10 +118,33 @@ const deletBlogPost = async (req, res) => {
   }
 };
 
+/**
+ * 
+ * @param {Request} req 
+ * @param {Response} res 
+ */
+const getBySearchTerm = async (req, res) => {
+  try {
+    const { q } = req.query;
+
+    if (!q) {
+      const getAllBlog = await postServices.getAllPosts();
+
+      return res.status(200).json(getAllBlog);
+    }
+    const searchTerm = await postServices.getBySearchTerm(q);
+
+    return res.status(200).json(searchTerm);
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
+
 module.exports = {
   createPostCategory,
   getAllPosts,
   getById,
   updateBlogPost,
   deletBlogPost,
+  getBySearchTerm,
 };

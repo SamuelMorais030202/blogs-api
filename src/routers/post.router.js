@@ -4,6 +4,7 @@ const { validatetoken, validatePost } = require('../middlewares');
 
 const router = express.Router();
 
+router.get('/search', validatetoken, postController.getBySearchTerm);
 router.get('/', validatetoken, postController.getAllPosts);
 router.get('/:id', validatetoken, postController.getById);
 router.post('/', validatetoken, validatePost, postController.createPostCategory);
