@@ -90,9 +90,38 @@ const updateBlogPost = async (req, res) => {
   }
 };
 
+/**
+ * 
+ * @param {Request} req 
+ * @param {Response} res 
+ */
+const deletBlogPost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { userId } = req; 
+
+    const validateExistPost = await postServices.getById(id);
+
+    if (!validateExistPost) {
+      return res.status(404).json({ message: 'Post does not exist' });
+    }
+
+    if (validateExistPost.userId !== userId) {
+      return res.status(401).json({ message: 'Unauthorized user' });
+    }
+
+    const deletePost = await blogPostServices.deletBlogPost(id);
+
+    return res.status(204).json(deletePost);
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
+
 module.exports = {
   createPostCategory,
   getAllPosts,
   getById,
   updateBlogPost,
+  deletBlogPost,
 };
